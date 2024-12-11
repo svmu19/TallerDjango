@@ -86,14 +86,15 @@ WSGI_APPLICATION = 'CallCenterGamer.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nombre_base_datos',  # Esto será proporcionado por Railway
-        'USER': 'usuario',            # Esto será proporcionado por Railway
-        'PASSWORD': 'contraseña',     # Esto será proporcionado por Railway
-        'HOST': 'localhost',          # O la dirección proporcionada por Railway
-        'PORT': '5432',               # Puerto de PostgreSQL, generalmente es 5432
+        'ENGINE': 'django.db.backends.mysql',  # Usamos el backend de MySQL
+        'NAME': os.getenv('MYSQL_DATABASE', 'railway'),  # El nombre de la base de datos
+        'USER': os.getenv('MYSQL_USER', 'root'),  # El nombre de usuario
+        'PASSWORD': os.getenv('MYSQL_PASSWORD', 'TDLpFWwrrSHTFGlVCwEOudswBoNSuFfm'),  # La contraseña
+        'HOST': os.getenv('MYSQL_HOST', 'mysql.railway.internal'),  # El host de la base de datos
+        'PORT': os.getenv('MYSQL_PORT', '3306'),  # El puerto de la base de datos
     }
 }
+
 
 # DATABASES = {
 #     'default': {
