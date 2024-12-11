@@ -1,1 +1,1 @@
-web: gunicorn TallerDjango.wsgi:application
+web: gunicorn CallCenterGamer.wsgi:application
