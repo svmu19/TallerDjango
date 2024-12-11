@@ -1,0 +1,57 @@
+{% extends "componentes/header.html" %}
+{% load static %}
+{% block links %}
+  <!-- Cargar el archivo CSS específico para la página de perfil -->
+  <link rel="stylesheet" href="{% static 'perfil.css' %}">
+{% endblock %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<main>
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p class="message {{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <section class="perfil">
+        <div class="perfil-card">
+            <div class="perfil-header">
+                <h1>Editar Perfil</h1>
+            </div>
+            <div class="perfil-body">
+                <div class="perfil-photo">
+                    <img id="profilePhoto" src="{% static 'img/default.jpg' %}" alt="Foto de Perfil">
+                    <input type="file" id="uploadPhoto" accept="image/*">
+                </div>
+                <form id="perfilForm" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="usuario">Usuario:</label>
+                        <input type="text" id="usuario" name="usuario" value="{{ usuario.usuario }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo Electrónico:</label>
+                        <input type="email" id="correo" name="correo" value="{{ usuario.correo }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rut">RUT:</label>
+                        <input type="text" id="rut" name="rut" value="{{ usuario.rut }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono:</label>
+                        <input type="tel" id="telefono" name="telefono" value="{{ usuario.telefono }}" required>
+                    </div>
+                    <button type="submit">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/perfil.js' %}"></script>
+{% endblock %}

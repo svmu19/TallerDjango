@@ -1,0 +1,68 @@
+{% extends "componentes/header.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foro de Discusión - Plataforma de Competencias Digitales</title>
+    <link rel="stylesheet" href="{% static 'foro.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    {% block content %}
+    <main class="forum-container">
+        <div class="forum-header">
+            <h1>Foro de Discusión</h1>
+            <a href="{% url 'crear_foro' %}" class="create-topic">Crear Nuevo Tema</a>
+        </div>
+
+        {% if modo == 'listar_foros' %}
+        <!-- Listar todos los foros -->
+        <div class="forum-list">
+            {% for foro in foros %}
+            <div class="topic-item">
+                <h2><a href="{% url 'ver_foro' foro_id=foro.id %}">{{ foro.titulo }}</a></h2>
+                <p>{{ foro.descripcion }}</p>
+                <span>Creado por {{ foro.creador.usuario }} el {{ foro.fecha_creacion }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% elif modo == 'ver_foro' %}
+        <!-- Ver un foro específico -->
+        <div class="forum-detail">
+            <h2>{{ foro.titulo }}</h2>
+            <p>{{ foro.descripcion }}</p>
+            <span>Creado por {{ foro.creador.usuario }} el {{ foro.fecha_creacion }}</span>
+
+            <h3>Respuestas:</h3>
+            <div class="respuestas">
+                {% for respuesta in respuestas %}
+                <div class="respuesta">
+                    <p><strong>{{ respuesta.autor.usuario }}</strong> dijo:</p>
+                    <p>{{ respuesta.contenido }}</p>
+                    <p><small>Fecha: {{ respuesta.fecha_creacion }}</small></p>
+                </div>
+            {% empty %}
+                <p>No hay respuestas aún.</p>
+            {% endfor %}
+            </div>
+
+            <!-- Formulario para responder -->
+            <h3>Responde al foro:</h3>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Responder</button>
+            </form>
+        </div>
+        {% endif %}
+    </main>
+    {% endblock %}
+</body>
+
+</html>

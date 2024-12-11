@@ -1,0 +1,28 @@
+{% extends "componentes/header.html" %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Foro - Plataforma de Competencias Digitales</title>
+    <link rel="stylesheet" href="{% static 'crearforo.css' %}">
+</head>
+<body>
+    {% block content %}
+    <main class="forum-container">
+        <div class="forum-header">
+            <h1>Crear Nuevo Foro</h1>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Crear Foro</button>
+        </form>
+    </main>
+    {% endblock %}
+</body>
+</html>

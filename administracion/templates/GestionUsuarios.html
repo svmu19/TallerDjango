@@ -1,0 +1,79 @@
+{% extends "componentes/header.html" %}
+{% load static %}
+{% block links%}
+<link rel="stylesheet" href="{% static 'gestion.css' %}">
+{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %} Gestion de usuarios {% endblock %}
+</head>
+<body>
+    {% if user.is_authenticated %}
+    {% block content %}
+        {% if user.admin == False%}
+            {% if user.tecnico == True %}
+                <script>window.location.href = '/Administracion/';</script>
+            {% endif %}
+            <script>window.location.href = '/Inicio/{{ user.id }}';</script>
+        {% endif %}
+        <h2 id="Titulo">Gestionar usuarios</h2>
+        <div class="Container">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Rut</th>
+                    <th scope="col">Activo</th>
+                    <th scope="col">Admin</th>
+                    <th scope="col">Tecnico</th>
+                    <th scope="col">Ultima Conexión</th>
+                    <th scope="col"></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for Usuario in Usuarios %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <tr>
+                            <th scope="row">{{ Usuario.id }}</th>
+                            <td>{{ Usuario.usuario }}</td>
+                            <td>{{ Usuario.correo }}</td>
+                            <td>{{ Usuario.rut }}</td>
+                            {% if Usuario.activo %}
+                                <td><input type="checkbox" checked name="activo"/></td>
+                            {% else %}
+                                <td><input type="checkbox" name="activo"/></td>
+                            {% endif %}
+                            {% if Usuario.admin %}
+                                <td><input type="checkbox" checked name="admin"/></td>
+                            {% else %}
+                                <td><input type="checkbox" name="admin"/></td>
+                            {% endif %}
+                            {% if Usuario.tecnico %}
+                                <td><input type="checkbox" checked name="tecnico"/></td>
+                            {% else %}
+                                <td><input type="checkbox" name="tecnico"/></td>
+                            {% endif %}
+                            <td>{{ Usuario.last_login }}</td>
+                            <input type="hidden" value="{{ Usuario.id }}" name="Userid">
+                            <input type="hidden" value="Falasdsse" name="Elimnar_user" id="Elimnar_user">
+                            <td><button id="btnModif" type="submit"><i class="fa-solid fa-pen"></i></button></td>
+                            <td><a href="/EliminarUsuario/{{Usuario.id}}" onclick="return confirm('¿Estas seguro de borrar la pregunta?')"><i class="fa-regular fa-trash-can"></i></a></td>
+                        </tr>
+                    </form>
+                {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    {% endblock %}
+{% endif%}
+</body>
+</html>
+

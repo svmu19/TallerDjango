@@ -1,0 +1,72 @@
+.forum-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.forum-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ff8800;
+    padding-bottom: 10px;
+}
+
+.forum-header h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form input,
+form textarea {
+    width: 100%; /* Ambos elementos ocupan todo el ancho disponible */
+    padding: 12px; /* Ajustar relleno para que sea uniforme */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Asegurarse de que el padding no se sume al ancho total */
+}
+
+/* Especificar una altura para textarea */
+form textarea {
+    min-height: 150px; /* Altura mínima para textarea */
+    resize: vertical;  /* Permitir que el usuario cambie el tamaño del textarea si lo desea */
+}
+
+
+form button {
+    background-color: #ff8800;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #d06e00;
+}
+
+button[type="submit"] {
+    width: 200px;
+    align-self: center;
+}
+
+form .form-error {
+    color: red;
+    font-size: 14px;
+}
+

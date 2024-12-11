@@ -1,0 +1,50 @@
+{% extends "componentes/header.html" %}
+{% load static %}
+{% block links%}
+<link rel="stylesheet" href="{% static 'index.css' %}?v=1.0">
+{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Administración{% endblock %}</title>
+</head>
+
+<body>
+    {% block content %}
+    {% if user.admin == False and user.tecnico == False%}
+    <script>window.location.href = '/Inicio/{{ user.id }}';</script>
+    {% else %}
+    <h1 id="Titulo">Preguntas de los usuarios</h1>
+    <div class="Container">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Usuario</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pregunta in Preguntas %}
+                <tr id="ModifTable">
+                    <th scope="row"><a href="/Respuesta/{{user.id}}/{{pregunta.idPregunta}}">{{pregunta.Titulo}}</a></th>
+                    <th scope="row">{{pregunta.Usuario}}</th>
+                    {% if user.admin %}
+                    <th scope="row"><a href="/BorrarPregunta/{{user.id}}/{{pregunta.idPregunta}}" onclick="return confirm('¿Estas seguro de borrar la pregunta?')"><i class="fa-regular fa-trash-can"></i></a></th>
+                    <th scope="row"><a href="/ModificarPregunta/{{pregunta.idPregunta}}"><i class="fa-solid fa-pen"></i></a></th>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    {% endblock %}
+</body>
+
+</html>
